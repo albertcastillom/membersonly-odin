@@ -1,0 +1,40 @@
+{
+  "name": "membersonly-odin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "NODE_ENV=production node app.js",
+    "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql"
+  
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertcastillom/membersonly-odin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/albertcastillom/membersonly-odin/issues"
+  },
+  "homepage": "https://github.com/albertcastillom/membersonly-odin#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.2.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
