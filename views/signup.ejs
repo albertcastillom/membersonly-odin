@@ -1,0 +1,28 @@
+
+
+<div class="card stack">
+  <h1>Create your account</h1>
+
+  <% if (typeof errors !== 'undefined' && errors.length) { %>
+    <ul class="error">
+      <% errors.forEach(e => { %><li><%= e.msg || e %></li><% }) %>
+    </ul>
+  <% } %>
+
+  <form method="POST" action="/sign-up">
+
+
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" minlength="3" required autocomplete="username"
+           value="<%= typeof username !== 'undefined' ? username : '' %>" />
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" minlength="6" required autocomplete="new-password" />
+
+    <div style="margin-top:12px">
+      <button type="submit">Sign up</button>
+    </div>
+  </form>
+
+  <p>Already have an account? <a href="/login">Log in</a></p>
+</div>

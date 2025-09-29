@@ -1,0 +1,13 @@
+
+<% const username = user ? user.username : null; %>
+
+<div class="stack">
+  <h1>Members Only</h1>
+
+  <% if (username) { %>
+    <p class="success">Welcome back, <strong><%= username %></strong> 🎉</p>
+    <p><a href="/protected-route">Go to the protected page</a></p>
+  <% } else { %>
+    <p>Welcome! Please <a href="/sign-up">create an account</a> or <a href="/login">log in</a>.</p>
+  <% } %>
+</div>
