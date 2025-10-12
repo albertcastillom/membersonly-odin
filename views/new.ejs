@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1><%= title %></h1>
+      <p class="subtitle">Share something nice ✨</p>
+
+      <% if (typeof error !== "undefined") { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+
+      <form method="post" action="/new" class="card" style="padding:16px;">
+        <div class="form-field">
+          <label for="user">Name</label>
+          <input id="user" name="user" value="<%= typeof user !== 'undefined' ? user.username : '' %>" />
+        </div>
+
+        <div class="form-field">
+          <label for="text">Message</label>
+          <textarea id="text" name="text"><%= typeof text !== 'undefined' ? text : '' %></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Post</button>
+          <a class="btn" href="/">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

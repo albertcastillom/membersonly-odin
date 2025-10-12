@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <% if (!message) { %>
+        <div class="card message-detail">
+          <h1>Message not found</h1>
+          <a class="btn" href="/">← Back to messages</a>
+        </div>
+      <% } else { %>
+        <div class="card message-detail">
+          <h1>Message Details</h1>
+          <p><strong>User:</strong> <%= message.user %></p>
+          <p><strong>Text:</strong> <%= message.text %></p>
+          <p><strong>Added:</strong> <%= new Date(message.added).toLocaleString() %></p>
+          <a class="btn" href="/protected">← Back</a>
+        </div>
+      <% } %>
+    </div>
+  </body>
+</html>

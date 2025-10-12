@@ -8,10 +8,9 @@ const isProd = process.env.NODE_ENV === "production";
 const connectionString = process.env.DATABASE_URL;
 
 // Some hosts require TLS. For local dev, keep ssl disabled.
-const ssl =
-  isProd || process.env.PGSSL === "require"
-    ? { rejectUnauthorized: false } // most hosted postgres need this
-    : false;
+// Only turn on SSL if explicitly requested
+const forceSSL = process.env.PGSSL === "require";
+const ssl = forceSSL ? { rejectUnauthorized: false } : false;
 
 const pool = new Pool({
   connectionString,
@@ -48,12 +47,16 @@ async function withTransaction(fn) {
 }
 
 // Graceful shutdown (CTRL+C / platform stop)
+let shuttingDown = false;
 function shutdown() {
+  if (shuttingDown) return;
+  shuttingDown = true;
   pool.end(() => {
     console.log("PostgreSQL pool has ended");
+    process.exit(0); // ensure the process exits
   });
 }
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+process.once("SIGINT", shutdown);
+process.once("SIGTERM", shutdown);
 
 module.exports = { pool, query, withTransaction };

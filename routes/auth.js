@@ -13,7 +13,7 @@ router.get("/login", (req, res) => res.render("login", { title: "Login" }));
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/protected",
     failureRedirect: "/login", // add connect-flash if you want messages
   })
 );
@@ -50,16 +50,16 @@ router.post(
     // auto-login after signup (optional)
     req.login(user, (err) => {
       if (err) return res.redirect("/login");
-      return res.redirect("/");
+      return res.redirect("/protected");
     });
   }
 );
 
-// POST /logout
-router.post("/logout", (req, res, next) => {
+// GET /logout
+router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect("/login");
+    res.redirect("/");
   });
 });
 

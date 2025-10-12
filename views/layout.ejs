@@ -25,7 +25,7 @@
     <a href="/">Home</a>
     <% if (user) { %>
       <span>• Signed in as <strong><%= user.username %></strong></span>
-      <form class="inline" method="POST" action="/logout">
+      <form class="inline" method="GET" action="/logout">
         <button>Logout</button>
       </form>
     <% } else { %>
