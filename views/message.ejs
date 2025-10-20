@@ -15,10 +15,10 @@
       <% } else { %>
         <div class="card message-detail">
           <h1>Message Details</h1>
-          <p><strong>User:</strong> <%= message.user %></p>
-          <p><strong>Text:</strong> <%= message.text %></p>
-          <p><strong>Added:</strong> <%= new Date(message.added).toLocaleString() %></p>
-          <a class="btn" href="/protected">← Back</a>
+          <p><strong>User:</strong> <%= message.username %></p>
+          <p><strong>Text:</strong> <%= message.body %></p>
+          <p><strong>Added:</strong> <%= new Date(message.created_at).toLocaleString() %></p>
+          <a class="btn" href="/">← Back</a>
         </div>
       <% } %>
     </div>

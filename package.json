@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
     "start": "NODE_ENV=production node app.js",
-    "db:init": "psql \"$DATABASE_URL\" -f db/schema.sql"
+    "db:which": "dotenv -e .env -- bash -lc 'psql \"$DATABASE_URL\" -c \"\\\\conninfo\"'",
+    "db:tables": "dotenv -e .env -- bash -lc 'psql \"$DATABASE_URL\" -c \"\\\\dt *.*\"'",
+    "db:init":   "dotenv -e .env -- bash -lc 'psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/schema.sql'",
+    "db:reset": "dotenv -e .env -- psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f db/reset.sql"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,7 @@
     "pg": "^8.16.3"
   },
   "devDependencies": {
+    "dotenv-cli": "^10.0.0",
     "nodemon": "^3.1.10"
   }
 }

@@ -6,9 +6,7 @@ const { RandomUUID } = require("crypto");
 const isAuth = require("./authMiddleware").isAuth;
 
 router.get("/", isAuth, userController.getMessages);
-
 //after login takes you to messages page
-router.get("/protected", userController.getMessages);
 router.get("/new", userController.getNewMessageForm);
 router.get("/messages/:id", userController.getMessageById);
 router.post("/new", userController.postNewMessage);

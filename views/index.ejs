@@ -18,11 +18,10 @@
         <% messages.forEach((m) => { %>
           <li class="card message">
             <div class="message-title">
-              <span class="message-user"><%= m.user %></span>
-              <span class="message-time"><%= new Date(m.added).toLocaleString() %></span>
+              <span class="message-user"><%= m.username %></span>
+              <span class="message-time"><%= new Date(m.created_at).toLocaleString() %></span>
             </div>
-            <div class="message-text"><%= m.text %></div>
-            <div><%= m.id %></div>
+            <div class="message-text"><%= m.body %></div>
             <div class="message-actions">
               <a class="btn btn-link" href="/messages/<%= m.id %>">Open →</a>
             </div>

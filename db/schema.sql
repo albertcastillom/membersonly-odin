@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE UNIQUE INDEX IF NOT EXISTS users_username_lower_key
   ON users ((LOWER(username)));
 
--- POSTS (aka messages)
+-- POSTS (aka messages)'
 CREATE TABLE IF NOT EXISTS posts (
   id          BIGSERIAL PRIMARY KEY,
   user_id     BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -26,8 +26,11 @@ CREATE TABLE IF NOT EXISTS posts (
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+
+
 -- Helpful index for profile pages / feeds
 CREATE INDEX IF NOT EXISTS posts_user_created_idx
   ON posts (user_id, created_at DESC);
+
 
 COMMIT;
