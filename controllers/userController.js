@@ -17,6 +17,9 @@ async function getMessageById(req, res) {
 }
 
 async function getNewMessageForm(req, res) {
+  if (!req.user || req.user.role !== "member") {
+    return res.status(403).send("Forbidden - Members only");
+  }
   res.render("new", { title: "New Message" });
 }
 

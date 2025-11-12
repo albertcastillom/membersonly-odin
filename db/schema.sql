@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   id              BIGSERIAL PRIMARY KEY,
   username        TEXT NOT NULL,
   password_hash   TEXT NOT NULL,
-  role            TEXT NOT NULL DEFAULT 'member',
+  role            TEXT NOT NULL DEFAULT 'notMember',  -- 'member' or 'notMember'
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

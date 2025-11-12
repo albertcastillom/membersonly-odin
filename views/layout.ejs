@@ -24,6 +24,7 @@
   <header>
     <a href="/">Home</a>
     <% if (user) { %>
+      <a href="/membership">Become a Member</a>
       <span>• Signed in as <strong><%= user.username %></strong></span>
       <form class="inline" method="GET" action="/logout">
         <button>Logout</button>

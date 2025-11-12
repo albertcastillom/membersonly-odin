@@ -16,12 +16,23 @@ async function getUserById(id) {
   return rows[0] || null;
 }
 
-async function createUser({ username, passwordHash, role = "member" }) {
+async function createUser({ username, passwordHash, role = "notMember" }) {
   const { rows } = await db.query(
     `INSERT INTO users (username, password_hash, role)
      VALUES ($1, $2, $3)
      RETURNING id, username, role`,
     [username, passwordHash, role]
+  );
+  return rows[0];
+}
+
+async function promoteUserToMember(userId) {
+  const { rows } = await db.query(
+    `UPDATE users
+     SET role = 'member'
+     WHERE id = $1
+     RETURNING id, username, role`,
+    [userId]
   );
   return rows[0];
 }
@@ -72,4 +83,5 @@ module.exports = {
   getAllMessages,
   getMessageById,
   addMessage,
+  promoteUserToMember,
 };

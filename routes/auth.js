@@ -2,7 +2,11 @@ const express = require("express");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 const { hashPassword } = require("../lib/passwordUtils");
-const { createUser, getUserByUsername } = require("../models/userModel");
+const {
+  createUser,
+  getUserByUsername,
+  promoteUserToMember,
+} = require("../models/userModel");
 
 const router = express.Router();
 
@@ -33,15 +37,18 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("signup", { errors: errors.array() });
+      return res
+        .status(400)
+        .render("signup", { title: "error", errors: errors.array() });
     }
 
     const { username, password } = req.body;
     const existing = await getUserByUsername(username);
     if (existing) {
-      return res
-        .status(400)
-        .render("signup", { errors: [{ msg: "Username taken" }] });
+      return res.status(400).render("signup", {
+        title: "error",
+        errors: [{ msg: "Username taken" }],
+      });
     }
 
     const passwordHash = await hashPassword(password);
@@ -54,6 +61,39 @@ router.post(
     });
   }
 );
+
+// Membership route to promote user to member
+router.get("/membership", (req, res) => {
+  res.render("membership", { title: "Membership" });
+});
+
+router.post("/membership", async (req, res, next) => {
+  if (req.user.role === "member") {
+    return res.status(400).render("membership", {
+      title: "Membership",
+      errors: [{ msg: "Already a member" }],
+    });
+  }
+  try {
+    const { membershipPassword } = req.body;
+    if (membershipPassword !== process.env.MEMBER_SECRET) {
+      return res.status(400).render("membership", {
+        title: "Membership",
+        errors: [{ msg: "Incorrect membership password" }],
+      });
+    }
+    const userId = req.user.id;
+    const upgraded = await promoteUserToMember(userId);
+    if (upgraded) {
+      req.user.role = upgraded.role; // update role in sessiom
+      return res.redirect("/");
+    } else {
+      return res.status(400).send("Could not upgrade membership");
+    }
+  } catch (err) {
+    return next(err);
+  }
+});
 
 // GET /logout
 router.get("/logout", (req, res, next) => {

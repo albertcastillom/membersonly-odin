@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="card">
+        <h1>Become a Member</h1>
+        <p>To access exclusive content and post messages, please become a member. Get a membership password from a fellow member.</p>
+        <form method="POST" action="/membership">
+            <label for="membershipPassword">Membership Password:</label>
+            <input type="password" id="membershipPassword" name="membershipPassword" required />
+            <br/><br/>
+            <button type="submit">Become a Member</button>
+        </form>
+          <% if (typeof error !== 'undefined') { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+    </div>
+</body>
+</html>
